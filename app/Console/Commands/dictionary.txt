@@ -1,0 +1,3 @@
+subject/course = مادة
+lecture = شعبة
+class = حصة
