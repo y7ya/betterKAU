@@ -49,7 +49,7 @@ class GetLectures extends Command
             while (true) {
                 try {
                     $client = new Client(HttpClient::create(["timeout" => $this->config["timeout"]]));
-                    $crawler = $client->request('GET', 'https://odusplus-ss.kau.edu.sa/PROD/xwckctlg.p_display_courses2?sel_subj=&sel_crse_strt=&sel_crse_end=&sel_levl=&sel_schd=&sel_divs=&sel_coll=&sel_dept=&sel_attr=&term_in=202320&one_subj=' . $list->course);
+                    $crawler = $client->request('GET', "https://odusplus-ss.kau.edu.sa/PROD/xwckctlg.p_display_courses2?sel_subj=&sel_crse_strt=&sel_crse_end=&sel_levl=&sel_schd=&sel_divs=&sel_coll=&sel_dept=&sel_attr=&term_in=$this->term&one_subj=$list->course");
 
                     $titles = $crawler->filter(".plaintable")->each(function ($node, $i) {
                         return $node->text();
