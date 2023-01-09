@@ -36,21 +36,21 @@ class GetLectures extends Command
      *
      * @return int
      */
+
     public function handle()
     {
         $this->setTerm();
 
         foreach (SearchList::where('allow', 1)->get(['id', 'course']) as $list) {
             $subject = [];
-            $titles = [];
-            $tables = [];
-
+            
             $tries = 0;
             while (true) {
                 try {
                     $client = new Client(HttpClient::create(["timeout" => $this->config["timeout"]]));
-                    $crawler = $client->request('GET', "https://odusplus-ss.kau.edu.sa/PROD/xwckctlg.p_display_courses2?sel_subj=&sel_crse_strt=&sel_crse_end=&sel_levl=&sel_schd=&sel_divs=&sel_coll=&sel_dept=&sel_attr=&term_in=$this->term&one_subj=$list->course");
-
+                    $url = "https://odusplus-ss.kau.edu.sa/PROD/xwckctlg.p_display_courses2?sel_subj=&sel_crse_strt=&sel_crse_end=&sel_levl=&sel_schd=&sel_divs=&sel_coll=&sel_dept=&sel_attr=&term_in=".$this->term['number']."&one_subj=".$list->course;
+                    info($url);
+                    $crawler = $client->request('GET', $url);
                     $titles = $crawler->filter(".plaintable")->each(function ($node, $i) {
                         return $node->text();
                     });
@@ -64,6 +64,7 @@ class GetLectures extends Command
                     $tries++;
                     continue;
                 }
+                $tries = 0;
                 break;
             }
 
@@ -80,13 +81,13 @@ class GetLectures extends Command
                     "course" => $titleDetails[0],
                     "number" => $titleDetails[1],
                     "name" => $titleDetails[2],
-                    "term_id" => $this->term,
+                    "term_id" => $this->term['id'],
                     "lectures" => $this->tableToArray($tables[$foundSubjects]->filter("tr"))
                 ];
 
-                // TODO: find a better way to insert data into database without deleting
+                // TODO: find a better way to update data without deleting 
                 Courses::where([
-                    'term_id' => $this->term,
+                    'term_id' => $this->term['id'],
                     'course'  => $subject['course'],
                     'number'  => $subject['number'],
                 ])->delete();
@@ -96,51 +97,19 @@ class GetLectures extends Command
                     $l->classes()->createMany($lecture['classes']);
                 }
 
-
-                // info($lectures);
-                // info("-----------------------------------------------------------------------------------------------------------------------------");
                 $foundSubjects++;
             }
 
-            sleep(60);
+            // sleep(60); // wait a 60s between fetching subjects
         }
 
-        // $subject = [
-        //     "course" => "CPIT",
-        //     "number" => "123",
-        //     "name" => "برمجة متقدمة",
-        //     "term_id" => "1",
-        //     "lectures" => [
-        //         [
-        //             "number" => "73222",
-        //             "name" => "IT1",
-        //             "type" => "نظري",
-        //             "days" => "MTU",
-        //             "classes" => [
-        //                 [
-        //                     "time_start" => "4:00 PM",
-        //                     "time_end" => "4:50 PM",
-        //                     "day" => "W",
-        //                     "building" => "Building",
-        //                     "room" => "room",
-        //                     "lecturer" => "احمد خالد علي"
-        //                 ]
-        //             ]
-        //         ]
-        //     ]
-        // ];
-
-        // $course = Courses::create($subject);
-        // foreach ($subject['lectures'] as $lecture) {
-        //     $l = $course->lectures()->create($lecture);
-        //     $l->classes()->createMany($lecture['classes']);
-        // }
     }
 
     function tableToArray(Crawler $raw_table)
     {
         $course = [];
 
+        // remove first row
         $raw_table = $raw_table->slice(1, $raw_table->count());
 
         $raw_table->each(function (Crawler $node) use (&$course) { // for each row in table (lecture)
@@ -155,7 +124,7 @@ class GetLectures extends Command
                 $lecture["name"]  = $this->remove(["P", "TBA"], $node->filter("td")->eq(1)->text());;
                 $lecture["type"]  = $this->remove([], $node->filter("td")->eq(2)->text());
                 $lecture["days"]  = $this->remove([], $node->filter("td")->eq(4)->text());
-                $lecture["term"] = $this->term;
+                $lecture["term"] = $this->term['id'];
                 $lecture["classes"] = [];
                 array_push($course, $lecture);
             }
@@ -207,6 +176,6 @@ class GetLectures extends Command
 
     function setTerm()
     {
-        $this->term = Terms::where('active', 1)->first()['id'];
+        $this->term = Terms::where('active', 1)->first();
     }
 }
