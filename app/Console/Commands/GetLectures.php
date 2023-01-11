@@ -43,9 +43,8 @@ class GetLectures extends Command
 
         foreach (SearchList::where('allow', 1)->get(['id', 'course']) as $list) {
             $subject = [];
-            
-            $tries = 0;
-            while (true) {
+
+             for ($i=0; $i < $this->config['retry']; $i++) { 
                 try {
                     $client = new Client(HttpClient::create(["timeout" => $this->config["timeout"]]));
                     $url = "https://odusplus-ss.kau.edu.sa/PROD/xwckctlg.p_display_courses2?sel_subj=&sel_crse_strt=&sel_crse_end=&sel_levl=&sel_schd=&sel_divs=&sel_coll=&sel_dept=&sel_attr=&term_in=".$this->term['number']."&one_subj=".$list->course;
@@ -59,14 +58,13 @@ class GetLectures extends Command
                     });
                 } catch (\Symfony\Component\HttpClient\Exception\TimeoutException $th) {
                     Log::error($th->getMessage());
-                    if ($tries == $this->config["retry"]) exit();
+                    if ($i == $this->config["retry"]) exit();
                     sleep(15);
-                    $tries++;
                     continue;
                 }
-                $tries = 0;
                 break;
             }
+
 
             if (count($tables) == 0)
                 continue;
@@ -100,7 +98,7 @@ class GetLectures extends Command
                 $foundSubjects++;
             }
 
-            // sleep(60); // wait a 60s between fetching subjects
+            sleep(30); // wait 30 seconds between fetching subjects
         }
 
     }
@@ -155,7 +153,7 @@ class GetLectures extends Command
     {
         return !(str_contains($nextTitle, $this->NO_LECTURES_MESSAGE) || str_contains($title, $this->NO_LECTURES_MESSAGE));
     }
-
+   
     function getTitleDetails(String $title)
     {
         $title = explode("-", $title, 2);
