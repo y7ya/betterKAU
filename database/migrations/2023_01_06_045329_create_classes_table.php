@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("lecture_id"); // ex: 3
             $table->foreign("lecture_id")->references('id')->on('lectures')->onDelete('cascade');
+            $table->string('number',5)->nullable(); // ex: 5
             $table->string('time_start',30)->nullable(); // ex: 10:00 AM
             $table->string('time_end',30)->nullable(); // ex: 10:50 AM
             $table->string('day', 3)->nullable(); // ex: W

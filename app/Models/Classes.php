@@ -9,7 +9,7 @@ class Classes extends Model
 {
 
     protected $primaryKey = 'id';
-    protected $fillable = ['lecture_id','time_start','time_end','day','building','room','lecturer'];
+    protected $fillable = ['lecture_id','number','time_start','time_end','day','building','room','lecturer'];
     public $timestamps = false;
 
     public function lecture(){
