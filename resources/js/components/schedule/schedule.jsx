@@ -76,15 +76,8 @@ class Schedule extends Component {
         }
 
         this.state = {
-
-            // options or courses is the second box, will show the courses
             options: getOptions(),
-
-            // state to know the sleceted department so we can filter above courses ^
-            selectedDep: "Not available",
-
             instructors: getInstructors(),
-
             selectedCourses: [],
         };
     }
@@ -110,17 +103,12 @@ class Schedule extends Component {
         }));
 
         setTimeout(() => {
-            for (
-                let index = 0;
-                index < this.state.instructors.length;
-                index++
-            ) {
+            for (let index = 0;index < this.state.instructors.length;index++) {
                 if (this.state.instructors[index].check) {
                     let evt = this.calendar.getEvent(
                         this.state.instructors[index].id,
                         this.state.instructors[index].calendarId
                     );
-                    /* console.log(evt); */
 
                     if (evt === null) {
                         console.log(this.state.instructors[index].name);
@@ -150,7 +138,6 @@ class Schedule extends Component {
                                     default:
                                         break;
                                 }
-                                /*console.log(this.state.instructors[index].startTime); */
                                 this.calendar.createEvents([
                                     {
                                         id: this.state.instructors[index].id,
@@ -202,6 +189,7 @@ class Schedule extends Component {
                 <div className="cal">
                     <Calendar
                         view="week"
+                        isReadOnly='true'
                         week={{
                             dayNames: [
                                 "Saturday",
