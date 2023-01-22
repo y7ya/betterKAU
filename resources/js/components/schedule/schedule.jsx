@@ -36,7 +36,7 @@ class Schedule extends Component {
                     name: "Thamer",
                     calendarId: "cal1",
                     course: "EE205",
-                    id: "677810",
+                    id: "677819",
                     check: false,
                     days: ["M", "W"],
                     startTime: "13:00",
@@ -103,7 +103,7 @@ class Schedule extends Component {
         }));
 
         setTimeout(() => {
-            for (let index = 0;index < this.state.instructors.length;index++) {
+            for (let index = 0; index < this.state.instructors.length; index++) {
                 if (this.state.instructors[index].check) {
                     let evt = this.calendar.getEvent(
                         this.state.instructors[index].id,
@@ -214,11 +214,8 @@ class Schedule extends Component {
                     <div className="innerSelect">
                         <Multiselect
                             options={this.state.options}
-                            onSelect={(e) =>
-                                this.setState({
-                                    ...this.state,
-                                    selectedCourses: e,
-                                })
+                            onSelect={(e) => this.setState({ ...this.state, selectedCourses: e, })
+
                             }
                             onRemove={(e) =>
                                 this.setState({
@@ -236,38 +233,38 @@ class Schedule extends Component {
                         <div className="instructors">
                             {this.state.selectedCourses.length
                                 ? this.state.selectedCourses.map((item) => {
-                                      return this.state.instructors.map(
-                                          (ins) => {
-                                              if (ins.course === item.name) {
-                                                  return (
-                                                      <div
-                                                          className="info"
-                                                          key={ins.id}
-                                                      >
-                                                          <p>{item.name}</p>
-                                                          <p className="name">
-                                                              {ins.name} /{" "}
-                                                              {ins.id}
-                                                          </p>
-                                                          <input
-                                                              type="checkbox"
-                                                              value={ins.name}
-                                                              name=""
-                                                              id=""
-                                                              onChange={
-                                                                  this
-                                                                      .handleCheckbox
-                                                              }
-                                                              checked={
-                                                                  ins.check
-                                                              }
-                                                          />
-                                                      </div>
-                                                  );
-                                              }
-                                          }
-                                      );
-                                  })
+                                    return this.state.instructors.map(
+                                        (ins) => {
+                                            if (ins.course === item.name) {
+                                                return (
+                                                    <div
+                                                        className="info"
+                                                        key={ins.id}
+                                                    >
+                                                        <p>{item.name}</p>
+                                                        <p className="name">
+                                                            {ins.name} /{" "}
+                                                            {ins.id}
+                                                        </p>
+                                                        <input
+                                                            type="checkbox"
+                                                            value={ins.name}
+                                                            name=""
+                                                            id=""
+                                                            onChange={
+                                                                this
+                                                                    .handleCheckbox
+                                                            }
+                                                            checked={
+                                                                ins.check
+                                                            }
+                                                        />
+                                                    </div>
+                                                );
+                                            }
+                                        }
+                                    );
+                                })
                                 : "No courses selected"}
                         </div>
                     ) : (
