@@ -158,7 +158,7 @@ class Schedule extends Component {
                                 this.calendar.openFormPopup({
                                     id: this.state.instructors[index].id,
                                     calendarId: "cal1",
-                                    title: "dfsdfsd",
+                                    title: "test",
                                     start: this.state.instructors[index]
                                         .startTime,
                                     end: this.state.instructors[index].endTime,
