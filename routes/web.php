@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Courses;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // return response()->json(Courses::with('lectures.classes')->first());
     return view('welcome');
+});
+
+Route::get('test', function () {
+
+    return response()->json(Courses::with('lectures.classes')->first());
 });
