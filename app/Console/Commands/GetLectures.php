@@ -157,7 +157,7 @@ class GetLectures extends Command
             return "";
         $time = explode("-", $time);
 
-        return ["start" => $time[0], "end" => $time[1]][$type];
+        return ["start" => trim($time[0]), "end" => trim($time[1])][$type];
     }
 
     function has_lectures($title, $nextTitle)
