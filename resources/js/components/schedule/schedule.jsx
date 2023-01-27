@@ -4,6 +4,7 @@ import Multiselect from "multiselect-react-dropdown";
 import React, { Component, useEffect, useState } from "react";
 import "../../../css/app.css";
 import data from './data';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Schedule extends Component {
     constructor(props) {
@@ -139,7 +140,7 @@ class Schedule extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div className="App container">
                 <div className="cal">
                     <Calendar
                         view="week"
@@ -164,8 +165,9 @@ class Schedule extends Component {
                         ref={this.calendarRef}
                     />
                 </div>
-                <div className="select-style">
-                    <div className="innerSelect">
+                <div className="select-style ">
+                    <div className="innerSelect flex-column p-3">
+                        <h5>Courses</h5>
                         <Multiselect
                             options={this.state.courses}
                             isObject={false}
@@ -177,31 +179,42 @@ class Schedule extends Component {
                         />
                     </div>
 
-                    {this.state.selectedCourses.length ? (
-                        <div className="instructors">
+
+                    <div className="instructors d-flex flex-column ">
+                        <h5 className="mb-2">Instructors</h5>
+                        <div className="inside-instructors">
                             {this.state.selectedCourses.length ? this.state.selectedCourses.map((item) => {
 
-                                return item.lectures.map((lec) => {
-                                    return (
-                                        <div className="info" key={lec.id} >
-                                            <p>{item.course_name}</p>
-                                            <p>{lec.classes[0].lecturer}</p>
-                                            <input
-                                                type="checkbox"
-                                                value={lec.id}
-                                                name=""
-                                                id=""
-                                                onChange={this.handleCheckbox}
-                                            />
+                                return (
+                                    <article>
+                                        <h6 className="mt-2 fw-normal">{item.course_name} - {item.name}</h6>
+                                        <div className="info d-flex flex-column ovr" >
+                                            {item.lectures.map((lec) => {
+                                                return (
+                                                    <div className="d-flex flex-row-reverse w-100 justify-content-between gap-5 ">
+                                                        <input
+                                                            className="form-check-input "
+                                                            type="checkbox"
+                                                            value={lec.id}
+                                                            name=""
+                                                            id="flexCheckDefault"
+                                                            onChange={this.handleCheckbox}
+                                                        />
+                                                        <label className="form-check-label fw-normal" htmlFor="flexCheckDefault" >
+                                                            {lec.classes[0].lecturer}
+                                                        </label>
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
-                                    )
-                                })
+                                    </article>
+                                )
                             })
                                 : "No courses selected"}
                         </div>
-                    ) : (
-                        ""
-                    )}
+
+                    </div>
+
                 </div>
             </div>
         );
