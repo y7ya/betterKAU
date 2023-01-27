@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Models\Courses;
 use Illuminate\Support\Facades\Route;
 /*
@@ -18,7 +19,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test', function () {
-
-    return response()->json(Courses::with('lectures.classes')->first());
-});
+// TODO:: GET to POST
+Route::get('/course/{course}',[CourseController::class,'index']);
