@@ -12,6 +12,11 @@ class Classes extends Model
     protected $fillable = ['lecture_id','number','time_start','time_end','day','building','room','lecturer'];
     public $timestamps = false;
 
+    public $casts = [
+        'time_start'=>'datetime:H:i:s',
+        'time_end'=>'datetime:H:i:s',
+    ];
+
     public function lecture(){
         return $this->belongsTo(Lectures::class,'lecture_id');
     }
