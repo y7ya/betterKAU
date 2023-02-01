@@ -7,21 +7,26 @@ import { Row, Card, Form, Button } from "react-bootstrap";
 import Schedule from "./schedule/Schedule";
 import SearchFrom from "./schedule/SearchFrom";
 import LecturesList from "./schedule/LecutresList";
+import Navbar from "./schedule/Navbar";
+
 
 const Home = (props) => {
     return (
-        <div className="container mt-5">
-            <Row>
-                <div className="col-md-9 col-xs-12 col-sm-12">
-                    <Schedule />
-                </div>
+        <div className="">
+            <Navbar />
+            <div className="container my-5 p-5 rounded sched-shadwo" style={{ backgroundColor: "white" }}>
+                <Row>
+                    <div className="col-md-9 col-xs-12 col-sm-12">
+                        <Schedule />
+                    </div>
 
-                <div className=" col-md-3 col-sm-12">
-                    <SearchFrom/>
+                    <div className=" col-md-3 col-sm-12">
+                        <SearchFrom />
 
-                    <LecturesList />
-                </div>
-            </Row>
+                        <LecturesList />
+                    </div>
+                </Row>
+            </div>
         </div>
     );
 };
