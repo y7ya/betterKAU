@@ -1,3 +1,32 @@
 .Collapsible__trigger {
   font-weight: bold;
 }
+
+.toastui-calendar-day-name__date {
+  display: none;
+}
+
+.toastui-calendar-day-name__name {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+@media screen and (max-width:726px) {
+
+  .toastui-calendar-day-name__name {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+
+
+}
+
+@media screen and (max-width:500px) {
+
+  .toastui-calendar-day-name__name {
+    font-weight: 400;
+    font-size: 6px;
+  }
+
+}
