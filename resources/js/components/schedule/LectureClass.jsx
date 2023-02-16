@@ -1,15 +1,21 @@
 import Collapsible from "react-collapsible"; // https://github.com/glennflanagan/react-collapsible
 import { Row, Card, Form, Button } from "react-bootstrap";
 
-const LectureClass = ({ lecture,course }) => {
+const LectureClass = ({ lecture,course,addSelectedCourses }) => {
+    
     const handleSelect = (e) => {
-        
-        // let filteredCourse course; 
-        // filteredCourse = filteredCourse['lectures'].filter((classs)=>classs.id==lecture.id); 
-        // console.log(filteredCourse); 
-
-        // course['lectures'] = course['lectures'].filter((classs)=>classs.id==lecture.id);
-        // console.log(course);
+        // !TODO: fix this shitty code !!!!
+        let lectureData = {
+            id: course.id,
+            course: course.course,
+            number:course.number,
+            name: course.name,
+            created_at: course.created_at,
+            updated_at: course.updated_at,
+            lecture,
+            term_id: course.term_id,
+        }
+        addSelectedCourses(lectureData);
     }
 
     return (

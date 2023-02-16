@@ -23,9 +23,9 @@ const Home = () => {
         setCourses(courses=>[...courses].filter(course=>(course.course + '-' + course.number) != removeCourse.toUpperCase()));
     }
     
-    // const addSelectedCourses = () => {
-    //     setSelectedCourses(selectedCourses=>[selectedCourse,...selectedCourses]);
-    // }
+    const addSelectedCourses = (selectedCourse) => {
+        setSelectedCourses(selectedCourses=>[selectedCourse,...selectedCourses.filter(course=>course.id != selectedCourse.id)]);
+    }
 
     // const removeSelectedCourses = () => { 
     //     selectedCourses(courses=>[...courses].filter(course=>(course.course + '-' + course.number) != removeCourse.toUpperCase()));
@@ -47,7 +47,7 @@ const Home = () => {
                     <div className=" col-md-3 col-sm-12">
                         <SearchForm addCourse={addCourse} removeCourse={removeCourse} />
 
-                        <CoursesList courses={courses} />
+                        <CoursesList courses={courses} addSelectedCourses={addSelectedCourses} />
                     </div>
                 </Row>
             </div>
