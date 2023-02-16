@@ -13,7 +13,7 @@ import Navbar from "./schedule/Navbar";
 const Home = (props) => {
     return (
         <div className="">
-            <Navbar />
+            {/* <Navbar /> */}
             <div className="container my-5 p-5 rounded sched-shadwo" style={{ backgroundColor: "white" }}>
                 <Row>
                     <div className="col-md-9 col-xs-12 col-sm-12">
