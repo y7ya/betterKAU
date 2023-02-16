@@ -5,25 +5,49 @@ import "../../css/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Card, Form, Button } from "react-bootstrap";
 import Schedule from "./schedule/Schedule";
-import SearchFrom from "./schedule/SearchFrom";
-import LecturesList from "./schedule/LecutresList";
+import SearchForm from "./schedule/SearchForm";
+import CoursesList from "./schedule/CoursesList";
 import Navbar from "./schedule/Navbar";
+import { remove } from "lodash";
 
 
-const Home = (props) => {
+const Home = () => {
+    const [courses,setCourses] = useState([]);
+    const [selectedCourses,setSelectedCourses] = useState([]);
+
+    const addCourse = (course) =>{
+        setCourses(courses=>[course,...courses]);
+    }
+    
+    const removeCourse = (removeCourse) =>{
+        setCourses(courses=>[...courses].filter(course=>(course.course + '-' + course.number) != removeCourse.toUpperCase()));
+    }
+    
+    // const addSelectedCourses = () => {
+    //     setSelectedCourses(selectedCourses=>[selectedCourse,...selectedCourses]);
+    // }
+
+    // const removeSelectedCourses = () => { 
+    //     selectedCourses(courses=>[...courses].filter(course=>(course.course + '-' + course.number) != removeCourse.toUpperCase()));
+    // }
+
+    useEffect(()=>{
+    },[courses,selectedCourses])
+
+
     return (
         <div className="">
             {/* <Navbar /> */}
-            <div className="container my-5 p-5 rounded sched-shadwo" style={{ backgroundColor: "white" }}>
+            <div className="container mt-5 p-3 rounded sched-shadwo" style={{ backgroundColor: "white" }}>
                 <Row>
                     <div className="col-md-9 col-xs-12 col-sm-12">
                         <Schedule />
                     </div>
 
                     <div className=" col-md-3 col-sm-12">
-                        <SearchFrom />
+                        <SearchForm addCourse={addCourse} removeCourse={removeCourse} />
 
-                        <LecturesList />
+                        <CoursesList courses={courses} />
                     </div>
                 </Row>
             </div>

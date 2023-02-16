@@ -7,7 +7,7 @@ import Logo from "../../../imgs/logo.png"
 const Navbar = () => {
     return (
         <nav class="navbar navbar-expand-lg  background-nav navbar-dark shdow">
-            <div class="container py-2">
+            <div class="container">
                 <a class="navbar-brand" href="#"><img class="w-75" src={Logo} alt="BetterKAU" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                     aria-controls="offcanvasNavbar">

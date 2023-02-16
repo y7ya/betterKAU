@@ -6,11 +6,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Tags from "@yaireo/tagify/dist/react.tagify";
 import "@yaireo/tagify/dist/tagify.css";
 import { Row, Card, Form, Button } from "react-bootstrap";
-import Collapsible from "react-collapsible"; // https://github.com/glennflanagan/react-collapsible
 
 const Schedule = (props) => {
-    const sch = useRef(null);
-
+    const scheduleRef = useRef(null);
     return (
         <div>
             <Card>
@@ -33,40 +31,11 @@ const Schedule = (props) => {
                         taskView: false,
                         eventView: ["time"],
                     }}
-                    ref={sch}
+                    ref={scheduleRef}
                 />
             </Card>
         </div>
     );
 };
-// class Schedule extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.calendarRef = React.createRef();
-
-//         this.state = {
-//             selectedCourses: [],
-//         };
-//     }
-
-//     get calendar() {
-//         return this.calendarRef.current.getInstance();
-//     }
-
-//     componentDidMount() {
-//         this.calendar.setDate("2023-03-07");
-//         this.calendar.setOptions({
-//             useDetailPopup: true,
-//         });
-
-//     }
-
-//     addToSelectedCourses = (e) => {};
-//     removeFromSelectedCourses = (e) => {};
-
-//     render() {
-//
-//     }
-// }
 
 export default Schedule;
