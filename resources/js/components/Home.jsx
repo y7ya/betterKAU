@@ -4,50 +4,74 @@ import React, { Component, useEffect, useState } from "react";
 import "../../css/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Card, Form, Button } from "react-bootstrap";
-import Schedule from "./schedule/Schedule";
+import Schedule from "./schedule/schedule";
 import SearchForm from "./schedule/SearchForm";
 import CoursesList from "./schedule/CoursesList";
 import Navbar from "./schedule/Navbar";
 import { remove } from "lodash";
 
-
 const Home = () => {
-    const [courses,setCourses] = useState([]);
-    const [selectedCourses,setSelectedCourses] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [selectedCourses, setSelectedCourses] = useState([]);
 
-    const addCourse = (course) =>{
-        setCourses(courses=>[course,...courses]);
-    }
-    
-    const removeCourse = (removeCourse) =>{
-        setCourses(courses=>[...courses].filter(course=>(course.course + '-' + course.number) != removeCourse.toUpperCase()));
-    }
-    
+    const addCourse = (course) => {
+        setCourses((courses) => [course, ...courses]);
+    };
+
+    const removeCourse = (removeCourse) => {
+        setCourses((courses) =>
+            [...courses].filter(
+                (course) =>
+                    course.course + "-" + course.number !=
+                    removeCourse.toUpperCase()
+            )
+        );
+        removeSelectedCourses(removeCourse);
+    };
+
     const addSelectedCourses = (selectedCourse) => {
-        setSelectedCourses(selectedCourses=>[selectedCourse,...selectedCourses.filter(course=>course.id != selectedCourse.id)]);
-    }
+        setSelectedCourses((selectedCourses) => [
+            selectedCourse,
+            ...selectedCourses.filter(
+                (course) => course.id != selectedCourse.id
+            ),
+        ]);
+    };
 
-    // const removeSelectedCourses = () => { 
-    //     selectedCourses(courses=>[...courses].filter(course=>(course.course + '-' + course.number) != removeCourse.toUpperCase()));
-    // }
+    const removeSelectedCourses = (removeSelectedCourse) => {
+        setSelectedCourses((selectedCourses) =>
+            [...selectedCourses].filter(
+                (selectedCourse) =>
+                    selectedCourse.course + "-" + selectedCourse.number !=
+                    removeSelectedCourse.toUpperCase()
+            )
+        );
+    };
 
-    useEffect(()=>{
-    },[courses,selectedCourses])
-
+    useEffect(() => {}, [courses, selectedCourses]);
 
     return (
         <div className="">
             {/* <Navbar /> */}
-            <div className="container mt-5 p-3 rounded sched-shadwo" style={{ backgroundColor: "white" }}>
+            <div
+                className="container mt-5 p-3 rounded sched-shadwo"
+                style={{ backgroundColor: "white" }}
+            >
                 <Row>
                     <div className="col-md-9 col-xs-12 col-sm-12">
-                        <Schedule />
+                        <Schedule selectedCourses={selectedCourses} />
                     </div>
 
                     <div className=" col-md-3 col-sm-12">
-                        <SearchForm addCourse={addCourse} removeCourse={removeCourse} />
+                        <SearchForm
+                            addCourse={addCourse}
+                            removeCourse={removeCourse}
+                        />
 
-                        <CoursesList courses={courses} addSelectedCourses={addSelectedCourses} />
+                        <CoursesList
+                            courses={courses}
+                            addSelectedCourses={addSelectedCourses}
+                        />
                     </div>
                 </Row>
             </div>
