@@ -4,6 +4,7 @@ import React, { Component, useEffect, useState, useRef } from "react";
 import "../../../css/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tags from "@yaireo/tagify/dist/react.tagify";
+import toast, { Toaster } from "react-hot-toast";
 import "@yaireo/tagify/dist/tagify.css";
 import { Row, Card, Form, Button } from "react-bootstrap";
 import { ViewState } from "@devexpress/dx-react-scheduler";
@@ -34,7 +35,7 @@ const Schedule = ({ selectedCourses }) => {
                 return '8'
             case 'S': // saturday
                 return '9'
-        
+
             default:
                 break;
         }
@@ -46,25 +47,64 @@ const Schedule = ({ selectedCourses }) => {
             let classData = course.lecture['classes'].map((classs) => {
                 return {
                     id: classs.id,
+                    lecture_id: course.lecture.id,
                     title: `${course.name} | ${classs.lecturer}`,
                     course: "",
                     startDate: `1337-02-0${dayletterToNumber(classs.day)}T${classs.time_start}`,
                     endDate: `1337-02-0${dayletterToNumber(classs.day)}T${classs.time_end}`,
                     location: "Building 51 | room :16",
-                    color:'#fff'
+                    color: '#fff'
                 };
             });
             courseData.push(...classData);
         });
         return courseData;
     };
-    const schedulerData = [...courseToAppointment()];
+
+    let schedulerData = [...courseToAppointment()];
+
+    const checkForSimilarties = (schedulerData) => {
+        let NoOverlapping = schedulerData;
+        let check = true;
+
+        for (let i = 0; i < schedulerData.length - 1; i++) {
+            for (let j = i + 1; j < schedulerData.length; j++) {
+                if (schedulerData[i].lecture_id !== schedulerData[j].lecture_id &&
+                    schedulerData[i].startDate < schedulerData[j].endDate &&
+                    schedulerData[j].startDate < schedulerData[i].endDate) {
+                    /* YOU CAN HIDE THE OVERLAPPING COURSES BUT LIMITED TO TWO 
+                    NoOverlapping = schedulerData.filter((item) => item.lecture_id != schedulerData[j].lecture_id)
+                    */
+                    check = false;
+                }
+            }
+        }
+        useEffect(() => {
+            if (!check && NoOverlapping.length) {
+                toast.error("لديك تعارض في احدى المواد....")
+            } else if (NoOverlapping.length) {
+                toast.success("جدولك صحيح...")
+            }
+        })
+
+        return NoOverlapping;
+    }
+
+    const noOverlapschedule = checkForSimilarties(schedulerData)
+
+
 
     return (
         <div>
             <Card>
-
-                <Scheduler height={800} data={schedulerData}>
+                <Toaster
+                    toastOptions={{
+                        style: {
+                            direction: "rtl",
+                        },
+                    }}
+                />
+                <Scheduler height={800} data={noOverlapschedule}>
                     <ViewState currentDate={currentDate} />
                     <WeekView
                         cellDuration={60}
@@ -72,9 +112,10 @@ const Schedule = ({ selectedCourses }) => {
                         endDayHour={24}
                     />
                     <Appointments />
-                    {/* <AppointmentTooltip /> */}
+                    <AppointmentTooltip />
                 </Scheduler>
-            </Card>
+                {/*                 <button onClick={console.log(checkForSimilarties(schedulerData))}>Click</button>
+ */}            </Card>
         </div>
     );
 };
