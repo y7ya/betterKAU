@@ -14,46 +14,51 @@ import {
     Appointments,
     AppointmentTooltip,
 } from "@devexpress/dx-react-scheduler-material-ui";
+import {theme} from './theme'
 
 const Schedule = ({ selectedCourses }) => {
     const currentDate = "1337-02-03";
 
-
     const dayletterToNumber = (dayLetter) => {
         switch (dayLetter) {
-            case 'U': // sunday
-                return '3'
-            case 'M': // monday
-                return '4'
-            case 'T': // tuesday
-                return '5'
-            case 'W': // wednesday
-                return '6'
-            case 'R': // thursday
-                return '7'
-            case 'F': // friday
-                return '8'
-            case 'S': // saturday
-                return '9'
+            case "U": // sunday
+                return "3";
+            case "M": // monday
+                return "4";
+            case "T": // tuesday
+                return "5";
+            case "W": // wednesday
+                return "6";
+            case "R": // thursday
+                return "7";
+            case "F": // friday
+                return "8";
+            case "S": // saturday
+                return "9";
 
             default:
                 break;
         }
-    }
+    };
+
     const courseToAppointment = () => {
         if (!selectedCourses?.length) return [];
         let courseData = [];
         selectedCourses.forEach((course) => {
-            let classData = course.lecture['classes'].map((classs) => {
+            let classData = course.lecture["classes"].map((classs) => {
                 return {
                     id: classs.id,
                     lecture_id: course.lecture.id,
-                    title: `${course.name} | ${classs.lecturer}`,
+                    title: `${course.course}-${course.number} | ${classs.lecturer}`,
                     course: "",
-                    startDate: `1337-02-0${dayletterToNumber(classs.day)}T${classs.time_start}`,
-                    endDate: `1337-02-0${dayletterToNumber(classs.day)}T${classs.time_end}`,
-                    location: "Building 51 | room :16",
-                    color: '#fff'
+                    startDate: `1337-02-0${dayletterToNumber(classs.day)}T${
+                        classs.time_start
+                    }`,
+                    endDate: `1337-02-0${dayletterToNumber(classs.day)}T${
+                        classs.time_end
+                    }`,
+                    location: `Building ${course.building} | Room ${course.room}`,
+                    color:course.color
                 };
             });
             courseData.push(...classData);
@@ -69,9 +74,12 @@ const Schedule = ({ selectedCourses }) => {
 
         for (let i = 0; i < schedulerData.length - 1; i++) {
             for (let j = i + 1; j < schedulerData.length; j++) {
-                if (schedulerData[i].lecture_id !== schedulerData[j].lecture_id &&
+                if (
+                    schedulerData[i].lecture_id !==
+                        schedulerData[j].lecture_id &&
                     schedulerData[i].startDate < schedulerData[j].endDate &&
-                    schedulerData[j].startDate < schedulerData[i].endDate) {
+                    schedulerData[j].startDate < schedulerData[i].endDate
+                ) {
                     /* YOU CAN HIDE THE OVERLAPPING COURSES BUT LIMITED TO TWO 
                     NoOverlapping = schedulerData.filter((item) => item.lecture_id != schedulerData[j].lecture_id)
                     */
@@ -81,18 +89,25 @@ const Schedule = ({ selectedCourses }) => {
         }
         useEffect(() => {
             if (!check && NoOverlapping.length) {
-                toast.error("لديك تعارض في احدى المواد....")
+                toast.error("لديك تعارض في احدى المواد....");
             } else if (NoOverlapping.length) {
-                toast.success("جدولك صحيح...")
+                toast.success("جدولك صحيح...");
             }
-        })
+        });
 
         return NoOverlapping;
-    }
+    };
 
-    const noOverlapschedule = checkForSimilarties(schedulerData)
+    const noOverlapschedule = checkForSimilarties(schedulerData);
 
-
+    const app = ({ children, style, ...restProps }) => (
+        <Appointments.Appointment
+            {...restProps}
+            style={{ ...style, backgroundColor: restProps.data.color }}
+        >
+            {children}
+        </Appointments.Appointment>
+    );
 
     return (
         <div>
@@ -110,12 +125,12 @@ const Schedule = ({ selectedCourses }) => {
                         cellDuration={60}
                         startDayHour={7}
                         endDayHour={24}
+                        excludedDays={[5,6]}
                     />
-                    <Appointments />
-                    <AppointmentTooltip />
+                    <Appointments appointmentComponent={app} />
+                    {/* <AppointmentTooltip /> */}
                 </Scheduler>
-                {/*                 <button onClick={console.log(checkForSimilarties(schedulerData))}>Click</button>
- */}            </Card>
+            </Card>
         </div>
     );
 };

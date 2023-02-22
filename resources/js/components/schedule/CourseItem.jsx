@@ -1,8 +1,10 @@
 import Collapsible from "react-collapsible"; // https://github.com/glennflanagan/react-collapsible
 import { Row, Card, Form, Button } from "react-bootstrap";
 import LectureClass from "./LectureClass";
+import RadioGroup from '@mui/material/RadioGroup';
 
-const CourseItem = ({ course,addSelectedCourses }) => {
+const CourseItem = ({ course, addSelectedCourses }) => {
+
     return (
         <form>
             <Collapsible
@@ -12,11 +14,18 @@ const CourseItem = ({ course,addSelectedCourses }) => {
                 }
             >
                 <div dir="rtl" className="">
-                    {course["lectures"].map((lecture) => {
-                        return (
-                                <LectureClass key={lecture.id} lecture={lecture} course={course} addSelectedCourses={addSelectedCourses} />
-                        );
-                    })}
+                    <RadioGroup>
+                        {course["lectures"].map((lecture) => {
+                            return (
+                                <LectureClass
+                                    key={lecture.id}
+                                    lecture={lecture}
+                                    course={course}
+                                    addSelectedCourses={addSelectedCourses}
+                                />
+                            );
+                        })}
+                    </RadioGroup>
                 </div>
             </Collapsible>
         </form>

@@ -8,13 +8,29 @@ import Schedule from "./schedule/schedule";
 import SearchForm from "./schedule/SearchForm";
 import CoursesList from "./schedule/CoursesList";
 import Navbar from "./schedule/Navbar";
-import { remove } from "lodash";
+import { theme } from "./schedule/theme";
 
 const Home = () => {
     const [courses, setCourses] = useState([]);
     const [selectedCourses, setSelectedCourses] = useState([]);
+    const colors = [
+        "gray",
+        "teal",
+        "red",
+        "brown",
+        "purple",
+        "green",
+        "yellowgreen",
+    ];
 
+    let currentColors = 0;
+    const getColor = () => {
+        currentColors++;
+        return colors[Math.floor(currentColors%colors.length)];
+    };
+    
     const addCourse = (course) => {
+        course.color = getColor();
         setCourses((courses) => [course, ...courses]);
     };
 
@@ -48,7 +64,8 @@ const Home = () => {
         );
     };
 
-    useEffect(() => {}, [courses, selectedCourses]);
+    useEffect(() => {
+    }, [courses, selectedCourses]);
 
     return (
         <div className="">
