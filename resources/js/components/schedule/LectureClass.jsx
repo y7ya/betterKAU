@@ -5,7 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import {theme} from './theme'
 
 
-const LectureClass = ({ lecture, course, addSelectedCourses }) => {
+const LectureClass = ({ lecture, course, addSelectedLectures }) => {
     const handleSelect = (e) => {
         // !TODO: fix this shitty code !!!!
         let lectureData = {
@@ -19,7 +19,7 @@ const LectureClass = ({ lecture, course, addSelectedCourses }) => {
             term_id: course.term_id,
             color:course.color
         };
-        addSelectedCourses(lectureData);
+        addSelectedLectures(lectureData);
     };
     return (
         <>

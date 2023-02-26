@@ -20,10 +20,10 @@ export const dayletterToNumber = (dayLetter) => {
     }
 };
 
-export const courseToAppointment = (selectedCourses) => {
-    if (!selectedCourses?.length) return [];
+export const courseToAppointment = (selectedLectures) => {
+    if (!selectedLectures?.length) return [];
     let courseData = [];
-    selectedCourses.forEach((course) => {
+    selectedLectures.forEach((course) => {
         let classData = course.lecture["classes"].map((classs) => {
             return {
                 id: classs.id,

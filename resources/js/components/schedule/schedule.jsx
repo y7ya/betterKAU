@@ -17,9 +17,9 @@ import {
 import {theme} from './theme'
 import {courseToAppointment} from '../../utils.js';
 
-const Schedule = ({ selectedCourses }) => {
+const Schedule = ({ selectedLectures }) => {
     const currentDate = "1337-02-03";
-    let schedulerData = [...courseToAppointment(selectedCourses)];
+    let schedulerData = [...courseToAppointment(selectedLectures)];
 
     const checkForSimilarties = (schedulerData) => {
         let NoOverlapping = schedulerData;

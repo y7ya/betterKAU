@@ -3,7 +3,7 @@ import { Row, Card, Form, Button } from "react-bootstrap";
 import LectureClass from "./LectureClass";
 import RadioGroup from '@mui/material/RadioGroup';
 
-const CourseItem = ({ course, addSelectedCourses }) => {
+const CourseItem = ({ course, addSelectedLectures }) => {
 
     return (
         <form>
@@ -21,7 +21,7 @@ const CourseItem = ({ course, addSelectedCourses }) => {
                                     key={lecture.id}
                                     lecture={lecture}
                                     course={course}
-                                    addSelectedCourses={addSelectedCourses}
+                                    addSelectedLectures={addSelectedLectures}
                                 />
                             );
                         })}

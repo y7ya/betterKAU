@@ -12,7 +12,7 @@ import { theme } from "./schedule/theme";
 
 const Home = () => {
     const [courses, setCourses] = useState([]);
-    const [selectedCourses, setSelectedCourses] = useState([]);
+    const [selectedLectures, setSelectedLectures] = useState([]);
     const colors = [
         "gray",
         "teal",
@@ -42,30 +42,30 @@ const Home = () => {
                     removeCourse.toUpperCase()
             )
         );
-        removeSelectedCourses(removeCourse);
+        removeSelectedLectures(removeCourse);
     };
 
-    const addSelectedCourses = (selectedCourse) => {
-        setSelectedCourses((selectedCourses) => [
-            selectedCourse,
-            ...selectedCourses.filter(
-                (course) => course.id != selectedCourse.id
+    const addSelectedLectures = (selectedLecture) => {
+        setSelectedLectures((selectedLectures) => [
+            selectedLecture,
+            ...selectedLectures.filter(
+                (course) => course.id != selectedLecture.id
             ),
         ]);
     };
 
-    const removeSelectedCourses = (removeSelectedCourse) => {
-        setSelectedCourses((selectedCourses) =>
-            [...selectedCourses].filter(
-                (selectedCourse) =>
-                    selectedCourse.course + "-" + selectedCourse.number !=
-                    removeSelectedCourse.toUpperCase()
+    const removeSelectedLectures = (removeSelectedLecture) => {
+        setSelectedLectures((selectedLectures) =>
+            [...selectedLectures].filter(
+                (selectedLecture) =>
+                    selectedLecture.course + "-" + selectedLecture.number !=
+                    removeSelectedLecture.toUpperCase()
             )
         );
     };
 
     useEffect(() => {
-    }, [courses, selectedCourses]);
+    }, [courses, selectedLectures]);
 
     return (
         <div className="">
@@ -76,7 +76,7 @@ const Home = () => {
             >
                 <Row>
                     <div className="col-md-9 col-xs-12 col-sm-12">
-                        <Schedule selectedCourses={selectedCourses} />
+                        <Schedule selectedLectures={selectedLectures} />
                     </div>
 
                     <div className=" col-md-3 col-sm-12">
@@ -87,7 +87,7 @@ const Home = () => {
 
                         <CoursesList
                             courses={courses}
-                            addSelectedCourses={addSelectedCourses}
+                            addSelectedLectures={addSelectedLectures}
                         />
                     </div>
                 </Row>
