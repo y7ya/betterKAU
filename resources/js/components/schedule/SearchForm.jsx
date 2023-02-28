@@ -54,6 +54,7 @@ const SearchFrom = ({ addCourse, removeCourse }) => {
             />
             <h5 dir="rtl">المواد</h5>
             <Tags
+                settings={{ "editTags" : false }}
                 className="w-100"
                 placeholder="CPIT-305"
                 dir="ltr"
