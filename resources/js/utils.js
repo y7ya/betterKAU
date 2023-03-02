@@ -29,14 +29,15 @@ export const courseToAppointment = (selectedLectures) => {
                 id: classs.id,
                 lecture_id: course.lecture.id,
                 title: `${course.course}-${course.number} | ${classs.lecturer}`,
-                course: "",
-                startDate: `1337-02-0${dayletterToNumber(classs.day)}T${
-                    classs.time_start
-                }`,
-                endDate: `1337-02-0${dayletterToNumber(classs.day)}T${
-                    classs.time_end
-                }`,
-                location: `Building ${course.building} | Room ${course.room}`,
+                course: course.course + '-' + course.number,
+                refrenceNumber:course.lecture.number,
+                lecturer:classs.lecturer,
+                startDate: `1337-02-0${dayletterToNumber(classs.day)}T${classs.time_start}`,
+                endDate: `1337-02-0${dayletterToNumber(classs.day)}T${classs.time_end}`,
+                building:classs.building,
+                room:classs.room,
+                name:course.lecture.name,
+                term:course.term,
                 color:course.color
             };
         });

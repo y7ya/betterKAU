@@ -2,12 +2,11 @@ import Collapsible from "react-collapsible"; // https://github.com/glennflanagan
 import { Row, Card, Form, Button } from "react-bootstrap";
 import { Radio } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import {theme} from './theme'
+import { theme } from "./theme";
+import { useState } from "react";
 
-
-const LectureClass = ({ lecture, course, addSelectedLectures }) => {
+const CourseLecture = ({ lecture, course, addSelectedLectures,removeSelectedLectures ,checked,setChecked,isOverlapped }) => {
     const handleSelect = (e) => {
-        // !TODO: fix this shitty code !!!!
         let lectureData = {
             id: course.id,
             course: course.course,
@@ -16,11 +15,18 @@ const LectureClass = ({ lecture, course, addSelectedLectures }) => {
             created_at: course.created_at,
             updated_at: course.updated_at,
             lecture,
-            term_id: course.term_id,
-            color:course.color
+            term: course.term,
+            color: course.color,
         };
-        addSelectedLectures(lectureData);
+        if(checked == lecture.id){
+            setChecked();
+            removeSelectedLectures(lectureData.course + "-" + lectureData.number);
+        }else{
+            setChecked(lecture.id);
+            addSelectedLectures(lectureData);
+        }
     };
+
     return (
         <>
             <div className="rtl">
@@ -28,24 +34,26 @@ const LectureClass = ({ lecture, course, addSelectedLectures }) => {
                     value={lecture.id}
                     control={
                         <Radio
-                        id={lecture.id}
+                            id={lecture.id}
                             className="ms-2"
                             name="group1"
                             type="radio"
-                            onChange={handleSelect}
+                            onClick={handleSelect}
+                            checked={checked==lecture.id}
                             sx={{
-                                padding:0,
+                                padding: 0,
                                 color: course.color,
                                 "&.Mui-checked": {
                                     color: course.color,
                                 },
                             }}
+                            disabled={isOverlapped}
                         />
                     }
                 />
                 <label
                     dir="rtl"
-                    className="form-check-label fw-normal mx-2"
+                    className={`form-check-label fw-normal mx-2 ${isOverlapped?'text-muted':''}`}
                     htmlFor={lecture.id}
                 >
                     {lecture.number + " | " + lecture["classes"][0].lecturer}
@@ -55,4 +63,4 @@ const LectureClass = ({ lecture, course, addSelectedLectures }) => {
     );
 };
 
-export default LectureClass;
+export default CourseLecture;

@@ -13,6 +13,7 @@ import { theme } from "./schedule/theme";
 const Home = () => {
     const [courses, setCourses] = useState([]);
     const [selectedLectures, setSelectedLectures] = useState([]);
+
     const colors = [
         "gray",
         "teal",
@@ -88,6 +89,8 @@ const Home = () => {
                         <CoursesList
                             courses={courses}
                             addSelectedLectures={addSelectedLectures}
+                            selectedLectures={selectedLectures}
+                            removeSelectedLectures={removeSelectedLectures}
                         />
                     </div>
                 </Row>
