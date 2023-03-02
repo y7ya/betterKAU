@@ -13,7 +13,7 @@ class Courses extends Model
 
     
     public function term(){
-        $this->belongsTo(Terms::class);
+        return $this->belongsTo(Terms::class);
     }
 
     public function lectures(){
