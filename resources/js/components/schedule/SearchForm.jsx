@@ -4,6 +4,7 @@ import Tags from "@yaireo/tagify/dist/react.tagify";
 import "@yaireo/tagify/dist/tagify.css";
 import { useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 const SearchFrom = ({ addCourse, removeCourse }) => {
     const tagifyRef = useRef();
@@ -18,17 +19,19 @@ const SearchFrom = ({ addCourse, removeCourse }) => {
     };
 
     const getCourseData = async (course) => {
-        const promise = fetch("course/" + course, {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (!res.message) return res;
-                throw Error(res.message);
-            });
+        const promise = axios.post(
+            "/course",
+            { course: course },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then((res) => res.data)
+        .then((res) => {
+            if (!res.message) return res;
+            throw Error(res.message);
+        });
 
         try {
             const data = await toast.promise(promise, {
