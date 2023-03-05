@@ -22,6 +22,8 @@ import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
 import DoorFrontOutlinedIcon from "@mui/icons-material/DoorFrontOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import MoreOutlinedIcon from "@mui/icons-material/MoreOutlined";
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 
 const Schedule = ({ selectedLectures }) => {
     const currentDate = "1337-02-03";
@@ -39,13 +41,23 @@ const Schedule = ({ selectedLectures }) => {
             {appointmentData.refrenceNumber && (
                 <div>
                     <div className="d-inline-flex ">
-                        <SearchOutlinedIcon className="mx-2" />
+                        <BookmarkBorderOutlinedIcon className="mx-2" />
                         <lable>{appointmentData.refrenceNumber}</lable>
                     </div>
                     <br />
                 </div>
             )}
-
+            
+            {appointmentData.term.name && (
+                <div>
+                    <div className="d-inline-flex ">
+                        <ArticleOutlinedIcon className="mx-2" />
+                        <lable>{appointmentData.term.name}</lable>
+                    </div>
+                    <br />
+                </div>
+            )}
+            
             {appointmentData.name && (
                 <div>
                     <div className="d-inline-flex ">
@@ -99,8 +111,8 @@ const Schedule = ({ selectedLectures }) => {
     );
 
     return (
-        <div>
-            <Card>
+        <>
+            <Card className="mt-sm-1">
                 <Toaster toastOptions={{style: {direction: "rtl",}}} />
                 <Scheduler height={800} data={schedulerData}>
                     <ViewState currentDate={currentDate} />
@@ -109,7 +121,7 @@ const Schedule = ({ selectedLectures }) => {
                     <AppointmentTooltip headerComponent={() => {}} contentComponent={tooltipContent} />
                 </Scheduler>
             </Card>
-        </div>
+        </>
     );
 };
 

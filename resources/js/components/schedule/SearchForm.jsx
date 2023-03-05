@@ -44,10 +44,19 @@ const SearchFrom = ({ addCourse, removeCourse }) => {
     };
 
     return (
-        <Card className="p-3">
-            <Toaster  toastOptions={{ style: { direction: "rtl", }, }} />
+        <Card className="p-2">
+            <Toaster toastOptions={{ style: { direction: "rtl" } }} />
             <h5 dir="rtl">المواد</h5>
-            <Tags settings={{ "editTags" : false }} className="w-100" placeholder="CPIT-305" dir="ltr" tagifyRef={tagifyRef} onAdd={handleAdd} onRemove={handleRemove} />
+            <Tags
+                settings={{ editTags: false}}
+                className="w-100"
+                placeholder="CPIT-305"
+                dir="ltr"
+                tagifyRef={tagifyRef}
+                onAdd={handleAdd}
+                onRemove={handleRemove}
+                autoFocus={true}
+            />
         </Card>
     );
 };

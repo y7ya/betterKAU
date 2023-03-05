@@ -27,9 +27,9 @@ const Home = () => {
     let currentColors = 0;
     const getColor = () => {
         currentColors++;
-        return colors[Math.floor(currentColors%colors.length)];
+        return colors[Math.floor(currentColors % colors.length)];
     };
-    
+
     const addCourse = (course) => {
         course.color = getColor();
         setCourses((courses) => [course, ...courses]);
@@ -65,22 +65,17 @@ const Home = () => {
         );
     };
 
-    useEffect(() => {
-    }, [courses, selectedLectures]);
+    useEffect(() => {}, [courses, selectedLectures]);
 
     return (
         <div className="">
             {/* <Navbar /> */}
-            <div
-                className="container mt-5 p-3 rounded sched-shadwo"
-                style={{ backgroundColor: "white" }}
-            >
-                <Row>
-                    <div className="col-md-9 col-xs-12 col-sm-12">
+            <div className="container phoneSchedule rounded sched-shadwo">
+                <Row className="p-0 m-0">
+                    <div className="order-2 order-md-1 col-md-9 col-sm-12 p-0">
                         <Schedule selectedLectures={selectedLectures} />
                     </div>
-
-                    <div className=" col-md-3 col-sm-12">
+                    <div className="order-1 order-md-2 col-md-3 col-sm-12">
                         <SearchForm
                             addCourse={addCourse}
                             removeCourse={removeCourse}
