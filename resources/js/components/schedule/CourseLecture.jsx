@@ -29,7 +29,7 @@ const CourseLecture = ({ lecture, course, addSelectedLectures,removeSelectedLect
 
     return (
         <>
-            <div className="rtl">
+            <div className="rtl text-nowrap">
                 <FormControlLabel
                     value={lecture.id}
                     control={
