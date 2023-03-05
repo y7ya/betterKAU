@@ -8,11 +8,12 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    public function index($course)
+    public function index(Request $request)
     {
-        if (!preg_match('/^[a-zA-Z]{1,5}-[0-9]{1,5}$/', $course)) return response()->json(['message' => 'صغية المادة غير صحيحة']);
+        if (!preg_match('/^[a-zA-Z]{1,5}-[0-9]{1,5}$/', $request->course)) return response()->json(['message' => 'صغية المادة غير صحيحة']);
 
-        $course = explode('-', $course);
-        return Courses::with(['term','lectures.classes'])->where('course', $course[0])->where('number', $course[1])->first() ?? response()->json(['message' => 'المادة ليست موجودة في سجلاتنا لإضافة المادة تواصل معنا على تويتر']);
+        $course = explode('-', $request->course);
+        if(!Courses::where('course', $course[0])->first()) return response()->json(['message' => 'المادة ليست موجودة في سجلاتنا لإضافة المادة تواصل معنا على تويتر']); 
+        return Courses::with(['term','lectures.classes'])->where('course', $course[0])->where('number', $course[1])->first() ?? response()->json(['message' => 'لا توجد شعب لهذه المادة']);
     }
 }
