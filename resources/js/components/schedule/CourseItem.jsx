@@ -17,7 +17,9 @@ const CourseItem = ({ course, selectedLectures, addSelectedLectures,removeSelect
             }
         }
     };
+
     const isTimeOverlapping = (class1, class2) => {
+        if(class1.day !== class2.day) return false;
         return (class1.time_end >= class2.time_start && class1.time_start <= class2.time_end)
     };
 
