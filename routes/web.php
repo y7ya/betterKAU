@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // return response()->json(Courses::with('lectures.classes')->first());
     return view('welcome');
 });
 
-// TODO:: GET to POST
-Route::get('/course/{course}',[CourseController::class,'index']);
+Route::post('/course',[CourseController::class,'index']);
