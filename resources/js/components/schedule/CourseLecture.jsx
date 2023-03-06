@@ -56,7 +56,7 @@ const CourseLecture = ({ lecture, course, addSelectedLectures,removeSelectedLect
                     className={`form-check-label fw-normal mx-2 ${isOverlapped?'text-muted':''}`}
                     htmlFor={lecture.id}
                 >
-                    {lecture.number + " | " + lecture["classes"][0].lecturer}
+                    {lecture.number + " | " + (lecture["classes"][0]?.lecturer ? lecture["classes"][0]?.lecturer: '')}
                 </label>
             </div>
         </>
