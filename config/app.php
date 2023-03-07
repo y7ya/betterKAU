@@ -211,6 +211,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Goutte' => Weidner\Goutte\GoutteFacade::class,
+        'Vite' => \Illuminate\Support\Facades\Vite::class,
     ])->toArray(),
 
 ];
