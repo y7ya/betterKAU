@@ -25,7 +25,9 @@ class TermsRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'number' => 'required|min:1|max:15',
+            'name' => 'required|min:1|max:50',
+            'active' => 'required',
         ];
     }
 

@@ -25,7 +25,8 @@ class SearchListRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'course' => 'required|min:1|max:20|unique:search_list',
+            'allow' => 'required',
         ];
     }
 
