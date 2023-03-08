@@ -32,7 +32,7 @@ const CourseItem = ({ course, selectedLectures, addSelectedLectures,removeSelect
                     course.course + "-" + course.number + " | " + course.name
                 }
             >
-                <div dir="rtl" className="">
+                <div dir="rtl" className="overflow-auto">
                     <RadioGroup>
                         {course["lectures"].map((lecture) => {
                             // if (isLecturesOverlapping(lecture, selectedLectures))return;
