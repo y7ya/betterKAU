@@ -12,7 +12,7 @@ class SearchList extends Model
 
     protected $table = "search_list";
     protected $primaryKey = "id";
-
+    public $timestamps = false;
     protected $fillable = [
         'course',
         'allow',

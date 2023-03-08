@@ -16,7 +16,8 @@ class Terms extends Model
         'name',
         'active',
     ];
-
+    public $timestamps = false;
+    
     public function courses(){
         return $this->hasMany(Courses::class);
     }
