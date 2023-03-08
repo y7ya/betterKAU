@@ -13,4 +13,10 @@ class SearchList extends Model
     protected $table = "search_list";
     protected $primaryKey = "id";
 
+    protected $fillable = [
+        'course',
+        'allow',
+    ];
+    
+
 }

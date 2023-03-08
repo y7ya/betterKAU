@@ -11,6 +11,12 @@ class Terms extends Model
     use CrudTrait;
     protected $primaryKey = 'id';
 
+    protected $fillable = [
+        'number',
+        'name',
+        'active',
+    ];
+
     public function courses(){
         return $this->hasMany(Courses::class);
     }
