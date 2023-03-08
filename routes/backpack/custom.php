@@ -19,4 +19,5 @@ Route::group([
     Route::crud('terms', 'TermsCrudController');
     Route::crud('search-list', 'SearchListCrudController');
     Route::crud('last-activitie', 'LastActivitieCrudController');
+    Route::crud('course', 'CourseCrudController');
 }); // this should be the absolute last line of this file
