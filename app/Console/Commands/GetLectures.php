@@ -4,6 +4,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Courses;
+use App\Models\Last_activitie;
 use App\Models\SearchList;
 use App\Models\Terms;
 use Illuminate\Console\Command;
@@ -43,8 +44,9 @@ class GetLectures extends Command
 
     public function handle()
     {
+        
+        Last_activitie::create(['title'=>'Updating!!','activity'=>'Start updating schedule']);
         $this->setTerm();
-
         foreach (SearchList::where('allow', 1)->get(['id', 'course']) as $list) {
             $subject = [];
 
@@ -94,6 +96,8 @@ class GetLectures extends Command
 
             sleep(30);
         }
+
+        Last_activitie::create(['title'=>'End!!','activity'=>'End updating schedule']);
     }
 
     function updateLectures($subject)

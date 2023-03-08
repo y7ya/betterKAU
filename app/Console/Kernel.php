@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('get:lectures')->everyMinute()->withoutOverlapping();
+        $schedule->command('get:lectures')->everySixHours()->withoutOverlapping();
     }
 
     /**
