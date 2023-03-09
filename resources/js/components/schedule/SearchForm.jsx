@@ -53,7 +53,7 @@ const SearchFrom = ({ addCourse, removeCourse }) => {
             <Tags
                 settings={{ editTags: false}}
                 className="w-100"
-                placeholder="CPIT-305"
+                placeholder="ISLS-201"
                 dir="ltr"
                 tagifyRef={tagifyRef}
                 onAdd={handleAdd}
