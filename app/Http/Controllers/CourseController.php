@@ -17,7 +17,7 @@ class CourseController extends Controller
         if (!preg_match('/^[a-zA-Z]{1,5}-[0-9]{1,5}$/', $request->course)) return response()->json(['message' => 'صغية المادة غير صحيحة']);
    
         $course = explode('-', $request->course);
-        if(!Courses::where('term_id',Terms::where('active',1)->first()->id)->where('course', $course[0])->first()) return response()->json(['message' => 'المادة ليست موجودة في سجلاتنا لإضافة المادة تواصل معنا على تويتر']); 
+        if(!Courses::where('term_id',Terms::where('active',1)->first()->id)->where('course', $course[0])->first()) return response()->json(['message' => 'المادة ليست موجودة في سجلاتنا لإضافة المادة تواصل معنا على تويتر @betterKAU']); 
         return Courses::with(['term','lectures.classes'])->where('term_id',Terms::where('active',1)->first()->id)->where('course', $course[0])->where('number', $course[1])->first() ?? response()->json(['message' => 'لا توجد شعب لهذه المادة']);
     }
 }
