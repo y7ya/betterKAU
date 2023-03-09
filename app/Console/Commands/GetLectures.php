@@ -102,17 +102,22 @@ class GetLectures extends Command
 
     function updateLectures($subject)
     {
-        $course = Courses::updateOrCreate([
-            'term_id' => $this->term['id'],
-            'course'  => $subject['course'],
-            'number'  => $subject['number'],
-        ], $subject);
-
-        foreach ($subject["lectures"] as $lecture) {
-            $l = $course->lectures()->updateOrCreate(['course_id' => $course->id, 'number' => $lecture['number']], $lecture);
-            foreach ($lecture["classes"] as $class) {
-                $l->classes()->updateOrCreate(['lecture_id' => $l->id, 'number' => $class['number']], $class);
+        try {
+            $course = Courses::updateOrCreate([
+                'term_id' => $this->term['id'],
+                'course'  => $subject['course'],
+                'number'  => $subject['number'],
+            ], $subject);
+    
+            foreach ($subject["lectures"] as $lecture) {
+                $l = $course->lectures()->updateOrCreate(['course_id' => $course->id, 'number' => $lecture['number']], $lecture);
+                foreach ($lecture["classes"] as $class) {
+                    $l->classes()->updateOrCreate(['lecture_id' => $l->id, 'number' => $class['number']], $class);
+                }
             }
+        } catch (\Throwable $th) {
+            Log::error('something went wrong!!');
+            Log::error($subject);
         }
     }
 
