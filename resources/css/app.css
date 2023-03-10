@@ -75,3 +75,8 @@ Bootstrap default media query
     margin-top: 0.5rem !important;
   }
  }
+
+.footer-color{
+  color:#2a3c2e !important;
+  /* color:#e1e1e1 !important; */
+}

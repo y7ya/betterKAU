@@ -8,6 +8,7 @@ import Schedule from "./schedule/schedule";
 import SearchForm from "./schedule/SearchForm";
 import CoursesList from "./schedule/CoursesList";
 import Navbar from "./schedule/Navbar";
+import Footer from "./layouts/Footer";
 import { theme } from "./schedule/theme";
 
 const Home = () => {
@@ -90,6 +91,7 @@ const Home = () => {
                     </div>
                 </Row>
             </div>
+            <Footer/>
         </div>
     );
 };
