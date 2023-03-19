@@ -1,4 +1,3 @@
-import Calendar from "@toast-ui/react-calendar";
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 import React, { Component, useEffect, useState, useRef } from "react";
 import "../../../css/app.css";

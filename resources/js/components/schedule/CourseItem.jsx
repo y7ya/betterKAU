@@ -5,7 +5,8 @@ import RadioGroup from "@mui/material/RadioGroup";
 import { useState } from "react";
 
 const CourseItem = ({ course, selectedLectures, addSelectedLectures,removeSelectedLectures  }) => {
-    const [checked,setChecked] = useState();
+    const [checked,setChecked] = useState(selectedLectures.filter(selected=> course.course == selected.course && course.number == selected.number)[0]?.lecture.id);
+
     const isLecturesOverlapping = (lecture, selectedLectures) => {
         if (!selectedLectures[0]) return false;
         for (let class_index = 0; class_index < lecture["classes"].length; class_index++) {            
@@ -35,7 +36,6 @@ const CourseItem = ({ course, selectedLectures, addSelectedLectures,removeSelect
                 <div dir="rtl" className="overflow-auto">
                     <RadioGroup>
                         {course["lectures"].map((lecture) => {
-                            // if (isLecturesOverlapping(lecture, selectedLectures))return;
                             return (
                                 <CourseLecture
                                     key={lecture.id}
@@ -43,6 +43,7 @@ const CourseItem = ({ course, selectedLectures, addSelectedLectures,removeSelect
                                     setChecked={setChecked}
                                     lecture={lecture}
                                     course={course}
+                                    selectedLectures={selectedLectures}
                                     addSelectedLectures={addSelectedLectures}
                                     removeSelectedLectures={removeSelectedLectures }
                                     isOverlapped={isLecturesOverlapping(lecture, selectedLectures)}

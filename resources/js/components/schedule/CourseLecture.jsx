@@ -3,9 +3,8 @@ import { Row, Card, Form, Button } from "react-bootstrap";
 import { Radio } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { theme } from "./theme";
-import { useState } from "react";
 
-const CourseLecture = ({ lecture, course, addSelectedLectures,removeSelectedLectures ,checked,setChecked,isOverlapped }) => {
+const CourseLecture = ({ lecture, course,addSelectedLectures,removeSelectedLectures ,checked,setChecked,isOverlapped }) => {
     const handleSelect = (e) => {
         let lectureData = {
             id: course.id,

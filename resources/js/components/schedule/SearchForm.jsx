@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
-const SearchFrom = ({ addCourse, removeCourse }) => {
+const SearchFrom = ({ addCourse, removeCourse,courses }) => {
     const tagifyRef = useRef();
 
     const handleAdd = async (e) => {
@@ -46,6 +46,7 @@ const SearchFrom = ({ addCourse, removeCourse }) => {
         } catch (error) {}
     };
 
+
     return (
         <Card className="p-2">
             <Toaster toastOptions={{ style: { direction: "rtl" } }} />
@@ -59,6 +60,7 @@ const SearchFrom = ({ addCourse, removeCourse }) => {
                 onAdd={handleAdd}
                 onRemove={handleRemove}
                 autoFocus={true}
+                defaultValue={courses.map(course=> course.course + "-" + course.number)}
             />
         </Card>
     );

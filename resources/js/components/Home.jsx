@@ -1,19 +1,18 @@
-import Calendar from "@toast-ui/react-calendar";
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Row, Card, Form, Button } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import Schedule from "./schedule/schedule";
 import SearchForm from "./schedule/SearchForm";
 import CoursesList from "./schedule/CoursesList";
-import Navbar from "./schedule/Navbar";
 import Footer from "./layouts/Footer";
 import { theme } from "./schedule/theme";
 
 const Home = () => {
-    const [courses, setCourses] = useState([]);
-    const [selectedLectures, setSelectedLectures] = useState([]);
+    const [courses, setCourses] = useState(JSON.parse(localStorage.getItem('courses')) ? JSON.parse(localStorage.getItem('courses')) : []);
+    const [selectedLectures, setSelectedLectures] = useState(JSON.parse(localStorage.getItem('selectedLectures')) ? JSON.parse(localStorage.getItem('selectedLectures')) : []);
+
 
     const colors = [
         "gray",
@@ -25,9 +24,10 @@ const Home = () => {
         "yellowgreen",
     ];
 
-    let currentColors = 0;
+    let currentColors = localStorage.getItem('currentColors');
     const getColor = () => {
         currentColors++;
+        localStorage.setItem("currentColors", currentColors)
         return colors[Math.floor(currentColors % colors.length)];
     };
 
@@ -66,7 +66,11 @@ const Home = () => {
         );
     };
 
-    useEffect(() => {}, [courses, selectedLectures]);
+    useEffect(() => {
+        localStorage.setItem("courses", JSON.stringify(courses))
+        localStorage.setItem("selectedLectures", JSON.stringify(selectedLectures))
+    }, [courses, selectedLectures]);
+
 
     return (
         <div className="">
@@ -80,6 +84,7 @@ const Home = () => {
                         <SearchForm
                             addCourse={addCourse}
                             removeCourse={removeCourse}
+                            courses={courses}
                         />
 
                         <CoursesList
