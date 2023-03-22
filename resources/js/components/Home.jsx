@@ -10,9 +10,16 @@ import Footer from "./layouts/Footer";
 import { theme } from "./schedule/theme";
 
 const Home = () => {
-    const [courses, setCourses] = useState(JSON.parse(localStorage.getItem('courses')) ? JSON.parse(localStorage.getItem('courses')) : []);
-    const [selectedLectures, setSelectedLectures] = useState(JSON.parse(localStorage.getItem('selectedLectures')) ? JSON.parse(localStorage.getItem('selectedLectures')) : []);
-
+    const [courses, setCourses] = useState(
+        JSON.parse(localStorage.getItem("courses"))
+            ? JSON.parse(localStorage.getItem("courses"))
+            : []
+    );
+    const [selectedLectures, setSelectedLectures] = useState(
+        JSON.parse(localStorage.getItem("selectedLectures"))
+            ? JSON.parse(localStorage.getItem("selectedLectures"))
+            : []
+    );
 
     const colors = [
         "gray",
@@ -24,10 +31,10 @@ const Home = () => {
         "yellowgreen",
     ];
 
-    let currentColors = localStorage.getItem('currentColors');
+    let currentColors = localStorage.getItem("currentColors");
     const getColor = () => {
         currentColors++;
-        localStorage.setItem("currentColors", currentColors)
+        localStorage.setItem("currentColors", currentColors);
         return colors[Math.floor(currentColors % colors.length)];
     };
 
@@ -67,10 +74,12 @@ const Home = () => {
     };
 
     useEffect(() => {
-        localStorage.setItem("courses", JSON.stringify(courses))
-        localStorage.setItem("selectedLectures", JSON.stringify(selectedLectures))
+        localStorage.setItem("courses", JSON.stringify(courses));
+        localStorage.setItem(
+            "selectedLectures",
+            JSON.stringify(selectedLectures)
+        );
     }, [courses, selectedLectures]);
-
 
     return (
         <div className="">
@@ -96,7 +105,7 @@ const Home = () => {
                     </div>
                 </Row>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 };
