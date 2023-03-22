@@ -195,14 +195,15 @@ const Schedule = ({ selectedLectures }) => {
         }
     };
 
+    manageScheduleStartEnd()
+    formatSchedule()
+
 
     // we used checked here to check weather to render ramadan times or not based on the current switch value
     const { checked } = useContext(AppContext);
     if (checked) {
         // fix: recode this part
         convertToRamadanTime();
-        manageScheduleStartEnd()
-        formatSchedule()
         // end fix: recode this part
     }
 

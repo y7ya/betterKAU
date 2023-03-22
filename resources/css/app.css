@@ -14,8 +14,10 @@
 }
 
 body {
-  background: #6D8B74 !important;
-  background-size: cover;
+  background: #222831 !important;
+  background-image: url('../imgs/ramadan_background_betterkau.jpg') !important;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
   font-size: 18px;
   font-weight: 400;
 }
@@ -80,6 +82,6 @@ Bootstrap default media query
 }
 
 .footer-color {
-  color: #2a3c2e !important;
+  color: #a3990a !important;
   /* color:#e1e1e1 !important; */
 }
