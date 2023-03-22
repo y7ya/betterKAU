@@ -79,6 +79,7 @@ const SearchFrom = ({ addCourse, removeCourse, courses }) => {
                 <Switch
 
                     color={checked ? 'warning' : 'neutral'}
+                    size="sm"
                     slotProps={{
                         input: { 'aria-label': 'Dark mode' },
                         thumb: {
