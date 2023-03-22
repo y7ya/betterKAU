@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
-const SearchFrom = ({ addCourse, removeCourse,courses }) => {
+const SearchFrom = ({ addCourse, removeCourse, courses }) => {
     const tagifyRef = useRef();
 
     const handleAdd = async (e) => {
@@ -19,19 +19,21 @@ const SearchFrom = ({ addCourse, removeCourse,courses }) => {
     };
 
     const getCourseData = async (course) => {
-        const promise = axios.post(
-            "/course",
-            { course: course },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        ).then((res) => res.data)
-        .then((res) => {
-            if (!res.message) return res;
-            throw Error(res.message);
-        });
+        const promise = axios
+            .post(
+                "/course",
+                { course: course },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            .then((res) => res.data)
+            .then((res) => {
+                if (!res.message) return res;
+                throw Error(res.message);
+            });
 
         try {
             const data = await toast.promise(promise, {
@@ -46,13 +48,12 @@ const SearchFrom = ({ addCourse, removeCourse,courses }) => {
         } catch (error) {}
     };
 
-
     return (
         <Card className="p-2">
             <Toaster toastOptions={{ style: { direction: "rtl" } }} />
             <h5 dir="rtl">المواد</h5>
             <Tags
-                settings={{ editTags: false}}
+                settings={{ editTags: false }}
                 className="w-100"
                 placeholder="ISLS-201"
                 dir="ltr"
@@ -60,7 +61,9 @@ const SearchFrom = ({ addCourse, removeCourse,courses }) => {
                 onAdd={handleAdd}
                 onRemove={handleRemove}
                 autoFocus={true}
-                defaultValue={courses.map(course=> course.course + "-" + course.number)}
+                defaultValue={courses.map(
+                    (course) => course.course + "-" + course.number
+                )}
             />
         </Card>
     );
