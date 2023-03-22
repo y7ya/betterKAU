@@ -5,7 +5,8 @@ import "@yaireo/tagify/dist/tagify.css";
 import { useRef, useState, useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import Switch from '@mui/joy/Switch';
+import Switch, { switchClasses } from '@mui/joy/Switch';
+import Typography from '@mui/joy/Typography';
 import DarkMode from '@mui/icons-material/DarkMode';
 import { AppContext } from "../Home";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -76,15 +77,31 @@ const SearchFrom = ({ addCourse, removeCourse, courses }) => {
             <Toaster toastOptions={{ style: { direction: "rtl" } }} />
             <div className="d-flex justify-content-between p-1">
                 <Switch
-                    color={checked ? 'danger' : 'neutral'}
+
+                    color={checked ? 'warning' : 'neutral'}
                     slotProps={{
                         input: { 'aria-label': 'Dark mode' },
                         thumb: {
                             children: <DarkMode />,
                         },
+                        /*    track: {
+                               children: (
+                                   <>
+                                       <Typography component="span" level="inherit" sx={{ ml: '5px' }}>
+                                           On
+                                       </Typography>
+                                       <Typography component="span" level="inherit" sx={{ mr: '5px' }}>
+                                           Off
+                                       </Typography>
+                                   </>
+                               ),
+                           }, */
                     }}
                     sx={{
-                        '--Switch-thumbSize': '25px',
+                        '--Switch-thumbSize': '23px',
+                        [`& .${switchClasses.thumb}`]: {
+                            transition: 'width 0.2s, left 0.2s',
+                        }
 
                     }}
                     onChange={handleChange}
