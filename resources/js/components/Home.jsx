@@ -1,5 +1,5 @@
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import "../../css/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row } from "react-bootstrap";
@@ -8,6 +8,9 @@ import SearchForm from "./schedule/SearchForm";
 import CoursesList from "./schedule/CoursesList";
 import Footer from "./layouts/Footer";
 import { theme } from "./schedule/theme";
+
+// app context used to make state shared across copmonents ==> reduces prop drilling 
+export const AppContext = createContext(null);
 
 const Home = () => {
     const [courses, setCourses] = useState(
@@ -81,32 +84,37 @@ const Home = () => {
         );
     }, [courses, selectedLectures]);
 
-    return (
-        <div className="">
-            {/* <Navbar /> */}
-            <div className="container phoneSchedule rounded sched-shadwo">
-                <Row className="p-0 m-0">
-                    <div className="order-2 order-md-1 col-md-9 col-sm-12 p-0">
-                        <Schedule selectedLectures={selectedLectures} />
-                    </div>
-                    <div className="order-1 order-md-2 col-md-3 col-sm-12">
-                        <SearchForm
-                            addCourse={addCourse}
-                            removeCourse={removeCourse}
-                            courses={courses}
-                        />
+    const [checked, setChecked] = useState(false);
 
-                        <CoursesList
-                            courses={courses}
-                            addSelectedLectures={addSelectedLectures}
-                            selectedLectures={selectedLectures}
-                            removeSelectedLectures={removeSelectedLectures}
-                        />
-                    </div>
-                </Row>
+
+    return (
+        // the state checked now can be used by any component bellow AppContext.Provider
+        <AppContext.Provider value={{ checked, setChecked }}>
+            <div className="">
+                {/* <Navbar /> */}
+                <div className="container phoneSchedule rounded sched-shadwo">
+                    <Row className="p-0 m-0">
+                        <div className="order-2 order-md-1 col-md-9 col-sm-12 p-0">
+                            <Schedule selectedLectures={selectedLectures} />
+                        </div>
+                        <div className="order-1 order-md-2 col-md-3 col-sm-12">
+                            <SearchForm
+                                addCourse={addCourse}
+                                removeCourse={removeCourse}
+                                courses={courses}
+                            />
+                            <CoursesList
+                                courses={courses}
+                                addSelectedLectures={addSelectedLectures}
+                                selectedLectures={selectedLectures}
+                                removeSelectedLectures={removeSelectedLectures}
+                            />
+                        </div>
+                    </Row>
+                </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
+        </AppContext.Provider>
     );
 };
 

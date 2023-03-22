@@ -1,5 +1,5 @@
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
-import React, { Component, useEffect, useState, useRef } from "react";
+import React, { Component, useEffect, useState, useRef, useContext } from "react";
 import "../../../css/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Tags from "@yaireo/tagify/dist/react.tagify";
@@ -14,7 +14,7 @@ import {
     AppointmentTooltip,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { theme } from "./theme";
-import { courseToAppointment,toRamadanTime} from "../../utils.js";
+import { courseToAppointment, toRamadanTime } from "../../utils.js";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
@@ -25,13 +25,13 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import moment from "moment";
-
+import { AppContext } from "../Home";
 
 const Schedule = ({ selectedLectures }) => {
     const currentDate = "2001-04-01";
     let schedulerData = [...courseToAppointment(selectedLectures)];
     let lowest = 8;
-    let highest=24;
+    let highest = 24;
     let scheduleHeight = 16;
 
     const convertToRamadanTime = () => {
@@ -157,12 +157,12 @@ const Schedule = ({ selectedLectures }) => {
         schedulerData.forEach((classs) => {
             if (!classs.startDate._isValid || !classs.endDate._isValid) return;
             if (!highest || classs.endDate.hours() > highest) {
-                let time = classs.endDate.clone().add(moment.duration(classs.endDate.diff(classs.startDate)).asMinutes(),"m");
+                let time = classs.endDate.clone().add(moment.duration(classs.endDate.diff(classs.startDate)).asMinutes(), "m");
                 highest = time.minute() ? time.clone().add(1, "hour").startOf("hour").hours() : time.clone().startOf("hour").hours();
             }
             if (!highest || classs.startDate.hours() > highest) {
-                let time = classs.startDate.clone().add(moment.duration(classs.endDate.diff(classs.startDate)).asMinutes(),"m");
-                highest = time.minute()? time.clone().add(1, "hour").startOf("hour").hours(): time.clone().startOf("hour").hours();
+                let time = classs.startDate.clone().add(moment.duration(classs.endDate.diff(classs.startDate)).asMinutes(), "m");
+                highest = time.minute() ? time.clone().add(1, "hour").startOf("hour").hours() : time.clone().startOf("hour").hours();
                 if (highest < 12) {
                     highest = 24;
                     lowest = 0;
@@ -184,22 +184,28 @@ const Schedule = ({ selectedLectures }) => {
             lowest = lowest - neededOffset;
             return;
         }
-        if (highest + neededOffset <= 24){
+        if (highest + neededOffset <= 24) {
             highest = highest + neededOffset;
             return;
-        } 
+        }
         highest = highest + neededOffset;
-        if(highest > 24){
+        if (highest > 24) {
             lowest = lowest - (highest - 24);
             highest = 24;
         }
     };
 
-    // fix: recode this part
-    convertToRamadanTime();
-    manageScheduleStartEnd()
-    formatSchedule()
-    // end fix: recode this part
+
+    // we used checked here to check weather to render ramadan times or not based on the current switch value
+    const { checked } = useContext(AppContext);
+    if (checked) {
+        // fix: recode this part
+        convertToRamadanTime();
+        manageScheduleStartEnd()
+        formatSchedule()
+        // end fix: recode this part
+    }
+
 
     return (
         <>
@@ -215,7 +221,7 @@ const Schedule = ({ selectedLectures }) => {
                     />
                     <Appointments appointmentComponent={app} />
                     <AppointmentTooltip
-                        headerComponent={() => {}}
+                        headerComponent={() => { }}
                         contentComponent={tooltipContent}
                     />
                 </Scheduler>

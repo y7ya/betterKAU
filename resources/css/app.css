@@ -29,10 +29,11 @@ body {
   font-weight: bold;
 }
 
-.Cell-dayOfWeek{
+.Cell-dayOfWeek {
   font-size: 2vh !important;
 }
-.Cell-dayOfMonth{
+
+.Cell-dayOfMonth {
   display: none;
 }
 
@@ -59,11 +60,12 @@ Bootstrap default media query
   background-color: white;
   box-shadow: 0px 0px 11px 6px rgba(102, 102, 102, 0.75);
 }
-.mt-sm-1{
+
+.mt-sm-1 {
   margin-top: 0rem;
 }
 
-@media (max-width: 575.98px) { 
+@media (max-width: 575.98px) {
   .phoneSchedule {
     padding: 0 !important;
     margin: 0 !important;
@@ -71,12 +73,13 @@ Bootstrap default media query
     background-color: transparent;
     box-shadow: none;
   }
-  .mt-sm-1{
+
+  .mt-sm-1 {
     margin-top: 0.5rem !important;
   }
- }
+}
 
-.footer-color{
-  color:#2a3c2e !important;
+.footer-color {
+  color: #2a3c2e !important;
   /* color:#e1e1e1 !important; */
 }
