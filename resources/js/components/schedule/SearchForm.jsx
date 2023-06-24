@@ -50,7 +50,10 @@ const SearchFrom = ({ addCourse, removeCourse,courses }) => {
     return (
         <Card className="p-2">
             <Toaster toastOptions={{ style: { direction: "rtl" } }} />
+            <div className="d-flex align-items-center gap-2" dir="rtl">
             <h5 dir="rtl">المواد</h5>
+            <label className="text-muted" style={{fontSize:12}}>(الفصل الدراسي الصيفي 2023)</label>
+            </div>
             <Tags
                 settings={{ editTags: false}}
                 className="w-100"
